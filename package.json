@@ -1,13 +1,13 @@
 {
-  "name": "react-creditcard",
+  "name": "react-creditCard",
   "description": "Credit Card React component",
   "version": "0.0.1",
   "main": "./lib/index.js",
   "jsnext:main": "es6/index.js",
   "standalone": "CreditCard",
-  "homepage": "http://github.com/martyphee/react-creditcard.git",
+  "homepage": "http://github.com/deliveroo/react-creditCard.git",
   "license": "MIT",
-  "author": "Marty Phee <marty.phee@gmail.com>",
+  "author": "Marty Phee <marty.phee@deliveroo.co.uk>",
   "keywords": [
     "react",
     "creditcard",
@@ -42,6 +42,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "http://github.com/martyphee/react-creditcard.git"
+    "url": "http://github.com/deliveroo/react-creditCard.git"
   }
 }
