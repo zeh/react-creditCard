@@ -1,6 +1,7 @@
 {
   "extends": ["standard", "standard-react"],
   "rules": {
+    "semi": [2, "always"],
     "brace-style": [2, "stroustrup", {"allowSingleLine": true}],
     "eqeqeq": [2, "smart"],
     "jsx-quotes": [2, "prefer-double"],

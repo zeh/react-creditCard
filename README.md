@@ -16,8 +16,11 @@ import CreditCard from 'react-creditCard';
 
 
 render() {
-    return (<CreditCard id="ccnumber" name="ccnumber" autoComplete="cc-number" size="20"/>)
+    return (<CreditCard id="ccnumber" name="ccnumber" autoComplete="cc-number" size="20" onChange={::this.onChange}/>)
 }
 ```
 
 More to come...
+
+- Validation
+- ...

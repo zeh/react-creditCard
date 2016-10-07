@@ -8,17 +8,12 @@ import CreditCard from '../../src';
 const App = React.createClass({
   getInitialState() {
     return {
-      card: '',
-      expiry: '',
-      ccv: '',
-      plate: '',
-      escaped: '',
-      leading: '',
-      custom: '',
-      changing: '',
-      pattern: '1111 1111',
-      cardPattern: '1111 1111 1111 1111'
+      card: ''
     }
+  },
+
+  onChange(value) {
+    this.setState({card: value});
   },
 
   render() {
@@ -32,7 +27,11 @@ const App = React.createClass({
       </form>
       <div className="form-field">
         <label htmlFor="ccnumber">Card Number:</label>
-        <CreditCard id="ccnumber" name="ccnumber" autoComplete="cc-number" size="20"/>
+        <CreditCard id="ccnumber" name="ccnumber" autoComplete="cc-number" size="20" onChange={this.onChange}/>
+      </div>
+
+      <div>
+        Selected Value: {this.state.card}
       </div>
 
       <footer><a href="https://github.com/insin/react-maskedinput">Source on GitHub</a></footer>

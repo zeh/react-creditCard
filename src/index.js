@@ -5,6 +5,17 @@ var classNames = require('classnames');
 var indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
 var CreditCard = React.createClass({
+  propTypes: {
+    onChange: React.PropTypes.func
+  },
+
+  getInitialState() {
+    return {
+      value: null,
+      cardType: null
+    }
+  },
+
   cardFromNumber(num) {
     var card, i, j, len, len1, p, pattern, ref;
     num = (num + '').replace(/\D/g, '');
@@ -55,7 +66,7 @@ var CreditCard = React.createClass({
     if (($target.selectionStart != null) && $target.selectionStart !== $target.selectionEnd) {
       return true;
     }
-    if ((typeof document !== "undefined" && document !== null ? (ref = document.selection) != null ? ref.createRange : void 0 : void 0) != null) {
+    if ((typeof document !== 'undefined' && document !== null ? (ref = document.selection) != null ? ref.createRange : void 0 : void 0) != null) {
       if (document.selection.createRange().text) {
         return true;
       }
@@ -64,15 +75,16 @@ var CreditCard = React.createClass({
   },
 
   safeVal(value, $target) {
-    var currPair, cursor, digit, error, last, prevPair;
+    var currPair, cursor, digit, last, prevPair;
     try {
       cursor = $target.selectionStart;
-    } catch (error1) {
-      error = error1;
+    } catch (e) {
       cursor = null;
     }
     last = $target.value;
     $target.value = value;
+    // console.log("Value: " + value + ", target.value:" + $target.value);
+    this._onChange(value);
     if (cursor !== null && $target === document.activeElement) {
       if (cursor === last.length) {
         cursor = value.length;
@@ -111,27 +123,21 @@ var CreditCard = React.createClass({
   },
 
   reFormatNumeric(e) {
-    var $target, me = this;
+    var $target;
     $target = (e.currentTarget);
-    return setTimeout(function() {
-      var value;
-      value = $target.value;
-      value = me.replaceFullWidthChars(value);
-      value = value.replace(/\D/g, '');
-      return me.safeVal(value, $target);
-    });
+    var value = $target.value;
+    value = this.replaceFullWidthChars(value);
+    value = value.replace(/\D/g, '');
+    return this.safeVal(value, $target);
   },
 
   reFormatCardNumber(e) {
-    var $target, me = this;
+    var $target;
     $target = e.currentTarget;
-    return setTimeout(function() {
-      var value;
-      value = $target.value;
-      value = me.replaceFullWidthChars(value);
-      value = me._formatCardNumber(value);
-      return me.safeVal(value, $target);
-    });
+    var value = $target.value;
+    value = this.replaceFullWidthChars(value);
+    value = this._formatCardNumber(value);
+    return this.safeVal(value, $target);
   },
 
   formatCardNumber(e) {
@@ -260,14 +266,7 @@ var CreditCard = React.createClass({
   },
 
   setCardType(e) {
-    var $target, cardType, val;
-    $target = (e.currentTarget);
-    val = $target.value;
-    cardType = this._cardType(val) || 'unknown';
-    if (!$target.classList.contains(cardType)) {
-      $target.className = classNames({'unknown': cardType === 'unknown', 'identified': cardType !== 'unknown'}, cardType);
-      return this._cardType(cardType);
-    }
+    this.setState({cardType: this._cardType(e.currentTarget.value)});
   },
 
   _formatCardNumber(num) {
@@ -287,9 +286,6 @@ var CreditCard = React.createClass({
         return;
       }
       groups.shift();
-      groups = $.grep(groups, function(n) {
-        return n;
-      });
       return groups.join(' ');
     }
   },
@@ -305,8 +301,18 @@ var CreditCard = React.createClass({
     this.setCardType(e);
   },
 
+  _onChange(value) {
+    if(this.props.onChange) {
+      this.props.onChange(value);
+    }
+    this.setState({value: value})
+  },
+
   render() {
+    var classnames = classNames({'unknown': !this.state.cardType, 'identified': this.state.cardType}, this.state.cardType);
+
     return (<input {...this.props}
+        className={classnames}
         ref={(el) => { this.creditCard = el}}
         onKeyPress={this._onKeyPress}
         onKeyDown={this.formatBackCardNumber}
