@@ -83,7 +83,6 @@ var CreditCard = React.createClass({
     }
     last = $target.value;
     $target.value = value;
-    // console.log("Value: " + value + ", target.value:" + $target.value);
     this._onChange(value);
     if (cursor !== null && $target === document.activeElement) {
       if (cursor === last.length) {
@@ -141,7 +140,6 @@ var CreditCard = React.createClass({
   },
 
   formatCardNumber(e) {
-    console.log("formatCardNumbe");
     var $target, card, digit, length, re, upperLength, value;
     digit = String.fromCharCode(e.which);
     if (!/^\d+$/.test(digit)) {
@@ -168,16 +166,10 @@ var CreditCard = React.createClass({
     }
     if (re.test(value)) {
       e.preventDefault();
-      console.log("Value: " + (value + ' ' + digit));
-      // return setTimeout(function() {
-        return $target.value = (value + ' ' + digit);
-      // });
+      return $target.value = (value + ' ' + digit);
     } else if (re.test(value + digit)) {
       e.preventDefault();
-      console.log("Value: " + (value + digit + ' '));
-      // return setTimeout(function() {
-        return $target.value = (value + digit + ' ');
-      // });
+      return $target.value = (value + digit + ' ');
     }
   },
 
@@ -262,7 +254,6 @@ var CreditCard = React.createClass({
 
   setCardType(e) {
     let type = this.cardFromNumber(e.currentTarget.value);
-    // console.log("set card type: " + JSON.stringify(type), ", value: " + e.currentTarget.value);
     this.setState({cardType: type});
   },
 
@@ -307,7 +298,6 @@ var CreditCard = React.createClass({
   },
 
   render() {
-    // console.log("Cardtype: " + this.state.cardType);
     let cardType = this.state.cardType ? this.state.cardType.type : 'unknown';
     var classnames = classNames(cardType, this.props.className);
 
