@@ -25,7 +25,7 @@ var config = {
     },
     extra: {
       module: {
-        noParse: /sinon/
+        noParse: /sinon/,
       },
       resolve: {
         alias: {
@@ -34,11 +34,10 @@ var config = {
       },
       externals: {
         'jsdom': 'window',
-        'cheerio': 'window',
         'react/addons': true, // important!!
         'react/lib/ExecutionEnvironment': true,
-        'react/lib/ReactContext': true
-      }
+        'react/lib/ReactContext': 'window'
+      },
     }
   }
 };

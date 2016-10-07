@@ -309,7 +309,7 @@ var CreditCard = React.createClass({
   },
 
   render() {
-    var classnames = classNames({'unknown': !this.state.cardType, 'identified': this.state.cardType}, this.state.cardType);
+    var classnames = classNames({'unknown': !this.state.cardType, 'identified': this.state.cardType}, this.state.cardType, this.props.className);
 
     return (<input {...this.props}
         className={classnames}
