@@ -53,7 +53,7 @@ describe('<CreditCard />', () => {
   it('should execute onChange event with proper value', () => {
     wrapper.simulate('input', { currentTarget: currentTarget});
 
-    expect(onChange.withArgs('3782 822463 10005').calledOnce).to.equal(true);
+    expect(onChange.withArgs('3782 822463 10005', sinon.match.any).calledOnce).to.equal(true);
   });
 });
 
@@ -66,8 +66,6 @@ describe('Passig props in', () => {
 
   it('should add classNames', () => {
     let wrapper = render(<CreditCard placeholder="TEST_PLACEHOLDER"/>);
-
-    console.log(wrapper.html());
     expect(wrapper.find("input").attr('placeholder')).to.equal("TEST_PLACEHOLDER")
   })
 });

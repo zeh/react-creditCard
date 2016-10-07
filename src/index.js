@@ -141,12 +141,13 @@ var CreditCard = React.createClass({
   },
 
   formatCardNumber(e) {
+    console.log("formatCardNumbe");
     var $target, card, digit, length, re, upperLength, value;
     digit = String.fromCharCode(e.which);
     if (!/^\d+$/.test(digit)) {
       return;
     }
-    $target = (e.currentTarget);
+    $target = e.currentTarget;
     value = $target.value;
     card = this.cardFromNumber(value + digit);
     length = (value.replace(/\D/g, '') + digit).length;
@@ -157,7 +158,7 @@ var CreditCard = React.createClass({
     if (length >= upperLength) {
       return;
     }
-    if (($target.selectionStart != null) && $target.selectionStart !== value.length) {
+    if ($target.selectionStart != null && $target.selectionStart !== value.length) {
       return;
     }
     if (card && card.type === 'amex') {
@@ -167,14 +168,16 @@ var CreditCard = React.createClass({
     }
     if (re.test(value)) {
       e.preventDefault();
-      return setTimeout(function() {
+      console.log("Value: " + (value + ' ' + digit));
+      // return setTimeout(function() {
         return $target.value = (value + ' ' + digit);
-      });
+      // });
     } else if (re.test(value + digit)) {
       e.preventDefault();
-      return setTimeout(function() {
+      console.log("Value: " + (value + digit + ' '));
+      // return setTimeout(function() {
         return $target.value = (value + digit + ' ');
-      });
+      // });
     }
   },
 
@@ -257,16 +260,10 @@ var CreditCard = React.createClass({
     return (ref = num.length, indexOf.call(card.length, ref) >= 0) && (card.luhn === false || this.luhnCheck(num));
   },
 
-  _cardType(num) {
-    var ref;
-    if (!num) {
-      return null;
-    }
-    return ((ref = this.cardFromNumber(num)) != null ? ref.type : void 0) || null;
-  },
-
   setCardType(e) {
-    this.setState({cardType: this._cardType(e.currentTarget.value)});
+    let type = this.cardFromNumber(e.currentTarget.value);
+    // console.log("set card type: " + JSON.stringify(type), ", value: " + e.currentTarget.value);
+    this.setState({cardType: type});
   },
 
   _formatCardNumber(num) {
@@ -286,6 +283,7 @@ var CreditCard = React.createClass({
         return;
       }
       groups.shift();
+      groups = groups.filter((g) => { return g; });
       return groups.join(' ');
     }
   },
@@ -303,15 +301,18 @@ var CreditCard = React.createClass({
 
   _onChange(value) {
     if(this.props.onChange) {
-      this.props.onChange(value);
+      this.props.onChange(value, this.state.cardType);
     }
     this.setState({value: value})
   },
 
   render() {
-    var classnames = classNames({'unknown': !this.state.cardType, 'identified': this.state.cardType}, this.state.cardType, this.props.className);
+    // console.log("Cardtype: " + this.state.cardType);
+    let cardType = this.state.cardType ? this.state.cardType.type : 'unknown';
+    var classnames = classNames(cardType, this.props.className);
 
     return (<input {...this.props}
+        type="text"
         className={classnames}
         ref={(el) => { this.creditCard = el}}
         onKeyPress={this._onKeyPress}
