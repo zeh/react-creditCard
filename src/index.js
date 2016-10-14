@@ -287,14 +287,19 @@ var CreditCard = React.createClass({
 
   _onInput(e) {
     this.reFormatCardNumber(e);
-    this.setCardType(e);
+  },
+
+  _onPaste(e) {
+    this.reFormatCardNumber(e);
   },
 
   _onChange(value) {
-    if(this.props.onChange) {
-      this.props.onChange(value, this.state.cardType);
-    }
-    this.setState({value: value})
+    var cardType = this.cardFromNumber(value);
+    this.setState({value: value, cardType: cardType}, function() {
+      if(this.props.onChange) {
+        this.props.onChange(value, cardType);
+      }
+    });
   },
 
   render() {
@@ -308,7 +313,7 @@ var CreditCard = React.createClass({
         onKeyPress={this._onKeyPress}
         onKeyDown={this.formatBackCardNumber}
         onKeyUp={this.setCardType}
-        onPaste={this.reFormatCardNumber}
+        onPaste={this._onPaste}
         onChange={this.reFormatCardNumber}
         onInput={this._onInput}
     />);

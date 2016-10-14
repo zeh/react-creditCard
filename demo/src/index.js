@@ -12,8 +12,8 @@ const App = React.createClass({
     }
   },
 
-  onChange(value) {
-    this.setState({card: value});
+  onChange(value, card) {
+    this.setState({card: value, cardType: card});
   },
 
   render() {
@@ -31,7 +31,8 @@ const App = React.createClass({
       </div>
 
       <div>
-        Selected Value: {this.state.card}
+        Selected Value: {this.state.card}<br/>
+        Selected Type: {this.state.cardType && this.state.cardType.type}
       </div>
 
       <footer><a href="https://github.com/insin/react-maskedinput">Source on GitHub</a></footer>
