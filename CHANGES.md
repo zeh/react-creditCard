@@ -1,3 +1,7 @@
+## 0.0.10 / 2016-1-14
+
+Fixed paste issue.
+
 ## 0.0.3 / 2016-1007
 
 Initial release features:
