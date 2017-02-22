@@ -13,7 +13,7 @@ var CreditCard = React.createClass({
     return {
       value: null,
       cardType: null
-    }
+    };
   },
 
   cardFromNumber(num) {
@@ -92,12 +92,13 @@ var CreditCard = React.createClass({
         prevPair = last.slice(cursor - 1, +cursor + 1 || 9e9);
         currPair = value.slice(cursor - 1, +cursor + 1 || 9e9);
         digit = value[cursor];
-        if (/\d/.test(digit) && prevPair === (digit + " ") && currPair === (" " + digit)) {
+        if (/\d/.test(digit) && prevPair === (digit + ' ') && currPair === (' ' + digit)) {
           cursor = cursor + 1;
         }
       }
       $target.selectionStart = cursor;
-      return $target.selectionEnd = cursor;
+      $target.selectionEnd = cursor;
+      return $target.selectionEnd;
     }
   },
 
@@ -166,10 +167,12 @@ var CreditCard = React.createClass({
     }
     if (re.test(value)) {
       e.preventDefault();
-      return $target.value = (value + ' ' + digit);
+      $target.value = (value + ' ' + digit);
+      return $target.value;
     } else if (re.test(value + digit)) {
       e.preventDefault();
-      return $target.value = (value + digit + ' ');
+      $target.value = (value + digit + ' ');
+      return $target.value;
     }
   },
 
@@ -186,12 +189,14 @@ var CreditCard = React.createClass({
     if (/\d\s$/.test(value)) {
       e.preventDefault();
       return setTimeout(function() {
-        return $target.value = (value.replace(/\d\s$/, ''));
+        $target.value = (value.replace(/\d\s$/, ''));
+        return $target.value;
       });
     } else if (/\s\d?$/.test(value)) {
       e.preventDefault();
       return setTimeout(function() {
-        return $target.value = (value.replace(/\d$/, ''));
+        $target.value = (value.replace(/\d$/, ''));
+        return $target.value;
       });
     }
   },
@@ -249,7 +254,8 @@ var CreditCard = React.createClass({
     if (!card) {
       return false;
     }
-    return (ref = num.length, indexOf.call(card.length, ref) >= 0) && (card.luhn === false || this.luhnCheck(num));
+    ref = num.length;
+    return (indexOf.call(card.length, ref) >= 0) && (card.luhn === false || this.luhnCheck(num));
   },
 
   setCardType(e) {
@@ -282,7 +288,7 @@ var CreditCard = React.createClass({
   _onKeyPress(e) {
     this.restrictNumeric(e);
     this.restrictCardNumber(e);
-    this.formatCardNumber(e)
+    this.formatCardNumber(e);
   },
 
   _onInput(e) {
@@ -296,7 +302,7 @@ var CreditCard = React.createClass({
   _onChange(value) {
     var cardType = this.cardFromNumber(value);
     this.setState({value: value, cardType: cardType}, function() {
-      if(this.props.onChange) {
+      if (this.props.onChange) {
         this.props.onChange(value, cardType);
       }
     });
@@ -307,15 +313,15 @@ var CreditCard = React.createClass({
     var classnames = classNames(cardType, this.props.className);
 
     return (<input {...this.props}
-        type="text"
-        className={classnames}
-        ref={(el) => { this.creditCard = el}}
-        onKeyPress={this._onKeyPress}
-        onKeyDown={this.formatBackCardNumber}
-        onKeyUp={this.setCardType}
-        onPaste={this._onPaste}
-        onChange={this.reFormatCardNumber}
-        onInput={this._onInput}
+      type="text"
+      className={classnames}
+      ref={(el) => { this.creditCard = el; }}
+      onKeyPress={this._onKeyPress}
+      onKeyDown={this.formatBackCardNumber}
+      onKeyUp={this.setCardType}
+      onPaste={this._onPaste}
+      onChange={this.reFormatCardNumber}
+      onInput={this._onInput}
     />);
   }
 });
