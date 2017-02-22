@@ -2,7 +2,7 @@
   "extends": ["standard", "standard-react"],
   "rules": {
     "semi": [2, "always"],
-    "brace-style": [2, "stroustrup", {"allowSingleLine": true}],
+    "brace-style": [2, "1tbs", {"allowSingleLine": true}],
     "eqeqeq": [2, "smart"],
     "jsx-quotes": [2, "prefer-double"],
     "react/prop-types": 0,
@@ -10,5 +10,10 @@
     "react/wrap-multilines": 0,
     "space-before-function-paren": 0
   },
-  "parser": "babel-eslint"
+  "parser": "babel-eslint",
+  "env": {
+    "browser": true,
+    "phantomjs": true,
+    "jasmine": true
+  }
 }
