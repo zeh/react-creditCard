@@ -32,10 +32,7 @@
     "classnames": "~2.2.5"
   },
   "peerDependencies": {
-    "react": "0.14.x || 15.x.x",
-    "chai": "3.x",
-    "cheerio": "0.19.x || 0.20.x",
-    "enzyme": "1.x || 2.x"
+    "react": "0.14.x || 15.x.x"
   },
   "devDependencies": {
     "chai": "3.x",
