@@ -76,14 +76,14 @@ var CreditCard = React.createClass({
 
   safeVal(value, $target) {
     var currPair, cursor, digit, last, prevPair;
+    last = $target.value;
+    $target.value = value;
+    this._onChange(value);
     try {
       cursor = $target.selectionStart;
     } catch (e) {
       cursor = null;
     }
-    last = $target.value;
-    $target.value = value;
-    this._onChange(value);
     if (cursor !== null && $target === document.activeElement) {
       if (cursor === last.length) {
         cursor = value.length;
