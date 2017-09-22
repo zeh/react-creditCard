@@ -56,7 +56,7 @@ module.exports = [
     type: 'jcb',
     patterns: [35],
     format: defaultFormat,
-    length: [16],
+    length: [16, 17, 18, 19],
     cvcLength: [3],
     luhn: true
   }
